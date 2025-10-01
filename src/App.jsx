@@ -1,6 +1,6 @@
 import { Routes, Route, Link } from "react-router-dom";
 
-function Home() { return <h1>Welcome to My Salon</h1>; }
+function Home() { return <h1>Market Street Salon</h1>; }
 function Services() { return <h1>Services</h1>; }
 function Contact() { return <h1>Contact</h1>; }
 
