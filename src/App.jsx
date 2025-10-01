@@ -1,17 +1,11 @@
 export default function App() {
   return (
-    <div style={{
-      display:"flex",
-      alignItems:"center",
-      justifyContent:"center",
-      height:"100vh",
-      textAlign:"center",
-      fontFamily:"sans-serif"
-    }}>
-      <div>
-        <h1>Market Street Salon's Website is Coming Soon!</h1>
-        <h2>We’ll be live on Sunday (10/05/2025) — thank you for your patience.</h2>
-      </div>
+    <div className="page">
+      <main className="card">
+        <h1 className="title">marketstreetsalon.com is Coming Soon</h1>
+        <p className="subtitle">We’ll be live on Sunday, October 5th 2025. Thanks for your patience!</p>
+        <p className="fineprint">Contact us at (425) 828-4959 if you have any questions / booking requests</p>
+      </main>
     </div>
   );
 }
