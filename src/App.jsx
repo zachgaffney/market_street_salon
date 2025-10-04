@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { BrowserRouter as Router, Routes, Route, Link, NavLink, useLocation, Navigate } from "react-router-dom";
-import { site, stylists } from "./siteConfig";
+import { site, site2, stylists } from "./siteConfig";
 import { Home as HomeIcon, Scissors, Mail } from "lucide-react";
 
 
@@ -265,27 +265,112 @@ const putInMiddle = (arr, predicate) => {
 
 
 function ContactPage() {
+  const owner = site.owner || {};
+  const ownerName = owner.name || "Emese";
+  const ownerPhoto = owner.photo || "/images/Emese.png";
+  const ownerBio =
+    owner.bio ||
+    `With more than three decades behind the chair, Emese is a trusted name in the Kirkland and Bellevue communities. 
+    She’s known for her precise technique, warm guidance, and a commitment to helping clients feel confident in their style. 
+    As owner, she mentors the team with an artist’s eye and a teacher’s heart—always raising the bar. 
+    Her chair is a place people return to for expertise, consistency, and care.`;
+
   return (
     <main className="min-h-screen bg-neutral-50 text-neutral-900">
-      <div className="max-w-5xl mx-auto px-4 py-24">
-        <h1 className="text-2xl md:text-3xl font-semibold">Contact</h1>
-        <div className="mt-4 text-neutral-700 space-y-1">
-          <div><strong>Phone:</strong> {site.phone}</div>
-          <div><strong>Address:</strong> {site.address}</div>
+      {/* ======= OWNER SPOTLIGHT ======= */}
+      <section className="relative py-20 px-6 overflow-hidden">
+        {/* background image slot (can swap with salon photo) */}
+        <div
+          className="absolute inset-0 bg-center bg-cover"
+          style={{ backgroundImage: "url('/images/transition.jpg')" }}
+        />
+        {/* overlay for readability */}
+        <div className="absolute inset-0 bg-white/15 backdrop-blur-sm" />
+
+        {/* content container */}
+        <div className="relative max-w-6xl mx-auto">
+          <div className="w-full rounded-2xl border border-neutral-200 bg-white/90 px-6 py-10 text-center shadow-md">
+            <h1
+              className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight"
+              style={{ fontFamily: "'Playfair Display', serif" }}
+            >
+              Meet the Owner: {ownerName}
+            </h1>
+            <p className="mt-3 text-neutral-600">
+              A Washington State Salon original—leading with skill, heart, and
+              30+ years of experience.
+            </p>
+
+            {/* photo + bio row */}
+            <div className="mt-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+              {/* photo column */}
+              <div className="flex justify-center lg:justify-center lg:col-span-4">
+                <img
+                  src={ownerPhoto}
+                  alt={`${ownerName}, Owner of Market Street Salon`}
+                  className="w-40 h-40 md:w-52 md:h-52 lg:w-56 lg:h-56 rounded-full object-cover object-center shadow-lg border-4 border-rose-200 ring-8 ring-rose-100"
+                />
+              </div>
+
+              {/* bio column */}
+              <div className="lg:col-span-8 flex justify-center">
+                <div className="rounded-3xl border border-neutral-200 bg-white/90 backdrop-blur-sm p-6 md:p-8 shadow-sm max-w-2xl text-left">
+                  <p className="text-neutral-800 leading-relaxed text-lg">
+                    {ownerBio}
+                  </p>
+                  <div className="mt-6 text-right">
+                    <span className="inline-block text-sm text-neutral-500">
+                      — {ownerName}, Owner
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-        <div className="mt-6">
-          <a
-            href={site.bookingUrl || "#"}
-            className="inline-block rounded-2xl px-5 py-3 bg-black text-white text-sm hover:opacity-90"
-          >
-            Book Now
-          </a>
+      </section>
+
+      {/* ======= CONTACT INFO ======= */}
+      <section className="px-4 md:px-8">
+        <div className="max-w-5xl mx-auto py-12 md:py-16">
+          <h2 className="text-xl md:text-2xl font-semibold">Contact</h2>
+
+          <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-6 text-neutral-700">
+            <div className="rounded-2xl border border-neutral-200 bg-white/90 backdrop-blur-sm p-5">
+              <div className="font-medium text-neutral-900">Phone</div>
+              <a
+                href={`tel:${String(site.phone || "").replace(/[^\d+]/g, "")}`}
+                className="mt-1 inline-block text-neutral-700 hover:text-neutral-900 underline decoration-neutral-300 hover:decoration-neutral-900"
+              >
+                {site.phone}
+              </a>
+            </div>
+
+            <div className="rounded-2xl border border-neutral-200 bg-white/90 backdrop-blur-sm p-5">
+              <div className="font-medium text-neutral-900">Address</div>
+              <address className="not-italic mt-1 text-neutral-700">
+                {site.address}
+              </address>
+            </div>
+          </div>
+
+          <div className="mt-8">
+            <a
+              href={site.bookingUrl || "#"}
+              className="inline-block rounded-2xl px-6 py-3 bg-black text-white text-sm font-semibold shadow-sm hover:opacity-90"
+            >
+              Book Now
+            </a>
+          </div>
         </div>
-      </div>
+      </section>
+
       <Footer />
     </main>
   );
 }
+
+
 
 /* ---------- Layout bits ---------- */
 

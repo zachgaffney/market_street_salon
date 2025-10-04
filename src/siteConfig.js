@@ -53,3 +53,16 @@ export const stylists = [
 }
 
 ];
+
+export const site2 = {
+  name: "Market Street Salon",
+  phone: "(206) 555-1212",
+  address: "123 Market Street, Seattle, WA 98101",
+  bookingUrl: "https://www.vagaro.com/marketstreetsalon",
+  owner: {
+    name: "Emese",
+    photo: "/images/emese.jpg", // close-up portrait, centered
+    bio:
+      "With more than three decades behind the chair, Emese is a trusted name in the Market Street community. She’s known for her precise technique, warm guidance, and a commitment to helping clients feel confident in their style. As owner, she mentors the team with an artist’s eye and a teacher’s heart—always raising the bar. Her chair is a place people return to for expertise, consistency, and care.",
+  },
+};
