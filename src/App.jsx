@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { BrowserRouter as Router, Routes, Route, Link, NavLink, useLocation, Navigate } from "react-router-dom";
 import { site, site2, stylists } from "./siteConfig";
-import { Home as HomeIcon, Scissors, Mail } from "lucide-react";
+import { Home as HomeIcon, Scissors, Info } from "lucide-react";
 
 
 
@@ -56,7 +56,7 @@ function NavLinks({ onClick }) {
       </NavLink>
 
       <NavLink
-        to="/contact"
+        to="/about"
         onClick={onClick}
         className={({ isActive }) =>
           `${base} ${underline} ${
@@ -66,8 +66,8 @@ function NavLinks({ onClick }) {
           }`
         }
       >
-        <Mail className="w-4 h-4" />
-        <span>Contact</span>
+        <Info className="w-4 h-4" />
+        <span>About</span>
       </NavLink>
     </>
   );
@@ -110,10 +110,10 @@ function Home() {
               Meet Your Stylist
             </Link>
             <Link
-              to="/contact"
+              to="/about"
               className="rounded-2xl px-6 py-3 bg-white/90 text-black text-sm font-medium hover:bg-white"
             >
-              Contact Us
+              About Us
             </Link>
           </div>
         </div>
@@ -129,19 +129,19 @@ function StylistsPage() {
   // filter out any stylist where services contain "owner"
   // Helpers (add near the top of StylistsPage)
 const isHolly = (s) => /holly/i.test(String(s.name || ""));
-const putInMiddle = (arr, predicate) => {
-  const idx = arr.findIndex(predicate);
-  if (idx < 0) return arr;
-  const list = [...arr];
-  const [item] = list.splice(idx, 1);
-  const mid = Math.floor(list.length / 2);
-  list.splice(mid, 0, item);
-  return list;
-};
+  const [open, setOpen] = useState(false);
 
+  // lock scroll when modal is open
+  useEffect(() => {
+    document.body.style.overflow = open ? "hidden" : "";
+    return () => (document.body.style.overflow = "");
+  }, [open]);
   const visibleStylists = stylists.filter(
     (s) => !/owner/i.test(String(s.services || ""))
   );
+
+  const SALON_PHONE = site?.phone || "(425) 828-4959";
+  const SALON_EMAIL = site?.email || "mahagonymirage5@yahoo.com";
 
   // Then split them based on Vagaro booking
   const withBooking = visibleStylists.filter(
@@ -159,7 +159,7 @@ const putInMiddle = (arr, predicate) => {
 
   return (
     <main className="min-h-screen bg-neutral-50 text-neutral-900">
-      <div className="max-w-6xl mx-auto px-4 py-20">
+      <div className="max-w-6xl mx-auto px-0">
       {/* --- Unified stylist grid (Holly centered, softer style) --- */}
 {/* --- Stylists Hero Section --- */}
 <section className="relative py-20 px-6 overflow-hidden">
@@ -209,7 +209,7 @@ const putInMiddle = (arr, predicate) => {
   alt={`${s.name} — ${s.services}`}
   className={`w-36 h-36 rounded-full object-cover shadow-lg transition-transform duration-300 hover:scale-105 ${
     holly
-      ? "border-4 border-pink-400 ring-4 ring-pink-100"
+      ? "border-4 border-blue-400 ring-4 ring-blue-100"
       : ""
   }`}
 />
@@ -225,9 +225,9 @@ const putInMiddle = (arr, predicate) => {
   href={url}
   target="_blank"
   rel="noreferrer"
-  className="inline-block rounded-full bg-pink-400 px-6 py-2.5 text-sm font-semibold text-white shadow-md hover:bg-pink-500 hover:shadow-lg transition-all"
+  className="inline-block rounded-full bg-blue-400 px-6 py-2.5 text-sm font-semibold text-white shadow-md hover:bg-blue-500 hover:shadow-lg transition-all"
 >
-  Book with Holly
+  Book through Vagaro
 </a>
 
               )}
@@ -253,6 +253,85 @@ const putInMiddle = (arr, predicate) => {
         );
       })}
     </div>
+    {/* Call-to-action button below grid */}
+{/* Call-to-action below grid */}
+<div className="mt-12 flex justify-center">
+  <button
+    onClick={() => setOpen(true)}
+    className="inline-block rounded-full bg-blue-400 px-8 py-3 text-sm font-semibold text-white shadow-md hover:bg-blue-500 hover:shadow-lg transition-all"
+  >
+    Book Now
+  </button>
+</div>
+
+{/* BOOK NOW MODAL */}
+{open && (
+  <div
+    aria-hidden={!open}
+    role="dialog"
+    aria-modal="true"
+    className="fixed inset-0 z-[100] flex items-center justify-center px-4"
+    onKeyDown={(e) => e.key === "Escape" && setOpen(false)}
+  >
+    {/* Backdrop */}
+    <button
+      className="absolute inset-0 bg-black/40 backdrop-blur-sm"
+      onClick={() => setOpen(false)}
+      aria-label="Close modal backdrop"
+    />
+
+    {/* Dialog */}
+    <div
+      className="relative w-full max-w-md rounded-3xl bg-white shadow-xl ring-1 ring-blue-200 overflow-hidden
+                 animate-[fadeIn_200ms_ease-out]"
+      style={{ animationFillMode: "both" }}
+    >
+      {/* Cute blue header */}
+      <div className="bg-blue-400 text-white px-6 py-4">
+        <h3 className="text-lg font-semibold tracking-wide">Book an Appointment</h3>
+        <p className="text-white/90 text-sm">We can’t wait to see you!</p>
+      </div>
+
+      {/* Body */}
+      <div className="px-6 py-6 space-y-5">
+        <div className="rounded-2xl border border-blue-100 bg-blue-50/60 p-4">
+          <p className="text-sm text-neutral-700">Call</p>
+          <a
+            href={`tel:${SALON_PHONE.replace(/[^\d+]/g, "")}`}
+            className="mt-1 block text-xl font-semibold text-blue-600 hover:underline"
+          >
+            {SALON_PHONE}
+          </a>
+        </div>
+
+        <div className="rounded-2xl border border-blue-100 bg-blue-50/60 p-4">
+          <p className="text-sm text-neutral-700">Email</p>
+          <a
+            href={`mailto:${SALON_EMAIL}`}
+            className="mt-1 block text-lg font-medium text-blue-600 hover:underline break-all"
+          >
+            {SALON_EMAIL}
+          </a>
+        </div>
+
+        <div className="flex items-center justify-end gap-3 pt-2">
+          <button
+            onClick={() => setOpen(false)}
+            className="rounded-full border border-neutral-300 px-5 py-2 text-sm font-medium hover:bg-neutral-50 transition"
+          >
+            Close
+          </button>
+
+        </div>
+      </div>
+
+      {/* Subtle corner flourish */}
+      <div className="pointer-events-none absolute -right-10 -top-10 h-24 w-24 rounded-full bg-blue-200/60 blur-2xl" />
+      <div className="pointer-events-none absolute -left-10 -bottom-10 h-24 w-24 rounded-full bg-blue-100/60 blur-2xl" />
+    </div>
+  </div>
+)}
+
   </div>
 </section>
 
@@ -264,58 +343,61 @@ const putInMiddle = (arr, predicate) => {
 }
 
 
-function ContactPage() {
+function AboutPage() {
   const owner = site.owner || {};
   const ownerName = owner.name || "Emese";
   const ownerPhoto = owner.photo || "/images/Emese.png";
   const ownerBio =
     owner.bio ||
-    `With more than three decades behind the chair, Emese is a trusted name in the Kirkland and Bellevue communities. 
-    She’s known for her precise technique, warm guidance, and a commitment to helping clients feel confident in their style. 
-    As owner, she mentors the team with an artist’s eye and a teacher’s heart—always raising the bar. 
-    Her chair is a place people return to for expertise, consistency, and care.`;
+    `With 23 years in the hair industry, I love bringing creativity to my work and helping people feel their best. I'm proud to
+    continue the legacy of a 40-year salon, while cherishing the relationships built along the way. Outside the salon, I enjoy
+    time with family and friends, my cats, and traveling the world, exploring new places and cultures.`;
+
+  const salonAddress =
+    site.address ||
+    site.location?.address ||
+    "Enter your salon address in site.address";
+
+  useEffect(() => {
+    return () => {};
+  }, []);
 
   return (
     <main className="min-h-screen bg-neutral-50 text-neutral-900">
       {/* ======= OWNER SPOTLIGHT ======= */}
-      <section className="relative py-20 px-6 overflow-hidden">
-        {/* background image slot (can swap with salon photo) */}
+      <section className="relative py-24 px-6 overflow-hidden">
         <div
           className="absolute inset-0 bg-center bg-cover"
-          style={{ backgroundImage: "url('/images/transition.jpg')" }}
+          style={{ backgroundImage: "url('/images/aboutusdrop.jpg')" }}
         />
-        {/* overlay for readability */}
-        <div className="absolute inset-0 bg-white/15 backdrop-blur-sm" />
+        <div className="absolute inset-0 bg-white/20 backdrop-blur-sm" />
 
-        {/* content container */}
         <div className="relative max-w-6xl mx-auto">
-          <div className="w-full rounded-2xl border border-neutral-200 bg-white/90 px-6 py-10 text-center shadow-md">
+          <div className="w-full rounded-3xl border border-neutral-200 bg-white/95 px-8 py-16 text-center shadow-xl">
             <h1
-              className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight"
+              className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight mb-2"
               style={{ fontFamily: "'Playfair Display', serif" }}
             >
-              Meet the Owner: {ownerName}
+              A salon 20+ years in the making.
             </h1>
-            <p className="mt-3 text-neutral-600">
+            <p className="text-neutral-600 text-base md:text-lg mb-10">
               A Washington State Salon original—leading with skill, heart, and
-              30+ years of experience.
+              decades of experience.
             </p>
 
-            {/* photo + bio row */}
-            <div className="mt-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-              {/* photo column */}
-              <div className="flex justify-center lg:justify-center lg:col-span-4">
+            {/* photo + bio */}
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+              <div className="flex justify-center lg:col-span-4">
                 <img
                   src={ownerPhoto}
                   alt={`${ownerName}, Owner of Market Street Salon`}
-                  className="w-40 h-40 md:w-52 md:h-52 lg:w-56 lg:h-56 rounded-full object-cover object-center shadow-lg border-4 border-rose-200 ring-8 ring-rose-100"
+                  className="w-44 h-44 md:w-56 md:h-56 rounded-full object-cover shadow-lg border-4 border-emerald-400 ring-8 ring-emerald-200"
                 />
               </div>
 
-              {/* bio column */}
-              <div className="lg:col-span-8 flex justify-center">
-                <div className="rounded-3xl border border-neutral-200 bg-white/90 backdrop-blur-sm p-6 md:p-8 shadow-sm max-w-2xl text-left">
-                  <p className="text-neutral-800 leading-relaxed text-lg">
+              <div className="lg:col-span-8">
+                <div className="rounded-3xl border border-neutral-200 bg-white p-8 shadow-sm text-left">
+                  <p className="text-neutral-800 leading-relaxed text-base md:text-lg">
                     {ownerBio}
                   </p>
                   <div className="mt-6 text-right">
@@ -330,37 +412,27 @@ function ContactPage() {
         </div>
       </section>
 
-      {/* ======= CONTACT INFO ======= */}
-      <section className="px-4 md:px-8">
-        <div className="max-w-5xl mx-auto py-12 md:py-16">
-          <h2 className="text-xl md:text-2xl font-semibold">Contact</h2>
+      {/* ======= MAP SECTION (separated + softer) ======= */}
+      <section className="py-20 px-6 bg-gradient-to-b from-white to-pink-50">
+        <div className="max-w-5xl mx-auto text-center mb-6">
+          <h2
+            className="text-2xl md:text-3xl font-semibold"
+            style={{ fontFamily: "'Playfair Display', serif" }}
+          >
+            Visit Us
+          </h2>
+          <p className="text-neutral-600 mt-2">{salonAddress}</p>
+        </div>
 
-          <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-6 text-neutral-700">
-            <div className="rounded-2xl border border-neutral-200 bg-white/90 backdrop-blur-sm p-5">
-              <div className="font-medium text-neutral-900">Phone</div>
-              <a
-                href={`tel:${String(site.phone || "").replace(/[^\d+]/g, "")}`}
-                className="mt-1 inline-block text-neutral-700 hover:text-neutral-900 underline decoration-neutral-300 hover:decoration-neutral-900"
-              >
-                {site.phone}
-              </a>
-            </div>
-
-            <div className="rounded-2xl border border-neutral-200 bg-white/90 backdrop-blur-sm p-5">
-              <div className="font-medium text-neutral-900">Address</div>
-              <address className="not-italic mt-1 text-neutral-700">
-                {site.address}
-              </address>
-            </div>
-          </div>
-
-          <div className="mt-8">
-            <a
-              href={site.bookingUrl || "#"}
-              className="inline-block rounded-2xl px-6 py-3 bg-black text-white text-sm font-semibold shadow-sm hover:opacity-90"
-            >
-              Book Now
-            </a>
+        <div className="rounded-2xl overflow-hidden border border-neutral-200 shadow-sm bg-white max-w-5xl mx-auto">
+          <div className="aspect-[16/9] w-full">
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2686.1752249645488!2d-122.21423400321046!3d47.68101689999998!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x549012e5c2a6c8ab%3A0xcb167ac0e697d544!2sMarket%20St%20Salon!5e0!3m2!1sen!2sus!4v1759553755511!5m2!1sen!2sus"
+              allowFullScreen=""
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              className="w-full h-[450px]"
+            ></iframe>
           </div>
         </div>
       </section>
@@ -369,6 +441,7 @@ function ContactPage() {
     </main>
   );
 }
+
 
 
 
@@ -507,7 +580,7 @@ export default function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/stylists" element={<StylistsPage />} />
-          <Route path="/contact" element={<ContactPage />} />
+          <Route path="/about" element={<AboutPage />} />
           {/* Fallback to home for unknown routes */}
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
