@@ -98,10 +98,9 @@ function Home() {
             Where style, confidence and artistry come together.
           </h1>
 
-          <p className="mt-4 max-w-xl md:max-w-2xl text-lg md:text-xl lg:text-2xl text-white/90">
-            Step into Market Street Salon, where expert stylists bring out your best look.
-          </p>
-
+ <p className="mt-4 max-w-xl md:max-w-2xl text-lg md:text-xl lg:text-2xl text-white/90">
+  Welcome to Market Street Salon — a friendly, skilled team ready to help you feel your best.
+</p>
           <div className="mt-8 flex flex-wrap gap-4 justify-center">
             <Link
               to="/stylists"
@@ -159,7 +158,7 @@ const isHolly = (s) => /holly/i.test(String(s.name || ""));
 
   return (
     <main className="min-h-screen bg-neutral-50 text-neutral-900">
-      <div className="max-w-6xl mx-auto px-0">
+      <div className="max-w-6xl mx-auto px-0 py-10">
       {/* --- Unified stylist grid (Holly centered, softer style) --- */}
 {/* --- Stylists Hero Section --- */}
 <section className="relative py-20 px-6 overflow-hidden">
@@ -209,7 +208,7 @@ const isHolly = (s) => /holly/i.test(String(s.name || ""));
   alt={`${s.name} — ${s.services}`}
   className={`w-36 h-36 rounded-full object-cover shadow-lg transition-transform duration-300 hover:scale-105 ${
     holly
-      ? "border-4 border-blue-400 ring-4 ring-blue-100"
+      ? "border-4 border-rose-400 ring-4 ring-rose-100"
       : ""
   }`}
 />
@@ -225,7 +224,7 @@ const isHolly = (s) => /holly/i.test(String(s.name || ""));
   href={url}
   target="_blank"
   rel="noreferrer"
-  className="inline-block rounded-full bg-blue-400 px-6 py-2.5 text-sm font-semibold text-white shadow-md hover:bg-blue-500 hover:shadow-lg transition-all"
+  className="inline-block rounded-full bg-rose-500 px-6 py-2.5 text-sm font-semibold text-white shadow-md hover:bg-rose-600 hover:shadow-lg transition-all"
 >
   Book through Vagaro
 </a>
@@ -258,7 +257,7 @@ const isHolly = (s) => /holly/i.test(String(s.name || ""));
 <div className="mt-12 flex justify-center">
   <button
     onClick={() => setOpen(true)}
-    className="inline-block rounded-full bg-blue-400 px-8 py-3 text-sm font-semibold text-white shadow-md hover:bg-blue-500 hover:shadow-lg transition-all"
+    className="inline-block rounded-full bg-rose-400 px-8 py-3 text-sm font-semibold text-white shadow-md hover:bg-rose-500 hover:shadow-lg transition-all"
   >
     Book Now
   </button>
@@ -282,33 +281,33 @@ const isHolly = (s) => /holly/i.test(String(s.name || ""));
 
     {/* Dialog */}
     <div
-      className="relative w-full max-w-md rounded-3xl bg-white shadow-xl ring-1 ring-blue-200 overflow-hidden
+      className="relative w-full max-w-md rounded-3xl bg-white shadow-xl ring-1 ring-rose-200 overflow-hidden
                  animate-[fadeIn_200ms_ease-out]"
       style={{ animationFillMode: "both" }}
     >
-      {/* Cute blue header */}
-      <div className="bg-blue-400 text-white px-6 py-4">
+      {/* Cute rose header */}
+      <div className="bg-rose-400 text-white px-6 py-4">
         <h3 className="text-lg font-semibold tracking-wide">Book an Appointment</h3>
         <p className="text-white/90 text-sm">We can’t wait to see you!</p>
       </div>
 
       {/* Body */}
       <div className="px-6 py-6 space-y-5">
-        <div className="rounded-2xl border border-blue-100 bg-blue-50/60 p-4">
+        <div className="rounded-2xl border border-rose-100 bg-rose-50/60 p-4">
           <p className="text-sm text-neutral-700">Call</p>
           <a
             href={`tel:${SALON_PHONE.replace(/[^\d+]/g, "")}`}
-            className="mt-1 block text-xl font-semibold text-blue-600 hover:underline"
+            className="mt-1 block text-xl font-semibold text-rose-600 hover:underline"
           >
             {SALON_PHONE}
           </a>
         </div>
 
-        <div className="rounded-2xl border border-blue-100 bg-blue-50/60 p-4">
+        <div className="rounded-2xl border border-rose-100 bg-rose-50/60 p-4">
           <p className="text-sm text-neutral-700">Email</p>
           <a
             href={`mailto:${SALON_EMAIL}`}
-            className="mt-1 block text-lg font-medium text-blue-600 hover:underline break-all"
+            className="mt-1 block text-lg font-medium text-rose-600 hover:underline break-all"
           >
             {SALON_EMAIL}
           </a>
@@ -326,8 +325,8 @@ const isHolly = (s) => /holly/i.test(String(s.name || ""));
       </div>
 
       {/* Subtle corner flourish */}
-      <div className="pointer-events-none absolute -right-10 -top-10 h-24 w-24 rounded-full bg-blue-200/60 blur-2xl" />
-      <div className="pointer-events-none absolute -left-10 -bottom-10 h-24 w-24 rounded-full bg-blue-100/60 blur-2xl" />
+      <div className="pointer-events-none absolute -right-10 -top-10 h-24 w-24 rounded-full bg-rose-200/60 blur-2xl" />
+      <div className="pointer-events-none absolute -left-10 -bottom-10 h-24 w-24 rounded-full bg-rose-100/60 blur-2xl" />
     </div>
   </div>
 )}
