@@ -50,8 +50,11 @@ export const stylists = [
   name: "Alex",
   services: "Women & Men Haircuts, Color, Highlights",
   photo: "images/Alex.png",
-}
-
+},
+{
+  name: "Varie",
+  services: "Women & Men Haircuts, Color, Highlights, Perm",
+  photo: "images/varie.png"},
 ];
 
 export const site2 = {
