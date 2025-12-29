@@ -23,7 +23,7 @@ export const stylists = [
   booking: "https://www.vagaro.com/lightandshadesalon/book-now?serviceid=1536293&staffid=0"
 },
 {
-  name: "Anette",
+  name: "Annette",
   services: "Women & Men Haircuts, Color, Highlights",
   photo: "images/Anette.png",
 },
