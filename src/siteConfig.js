@@ -23,9 +23,16 @@ export const stylists = [
   booking: "https://www.vagaro.com/lightandshadesalon/book-now?serviceid=1536293&staffid=0"
 },
 {
+  name: "Sonal",
+  services: "Women & Men Haircuts, Color, Highlights",
+  photo: "images/Sonal.jpg",
+  booking: "https://www.vagaro.com/colorinthehair"
+},
+{
   name: "Annette",
   services: "Women & Men Haircuts, Color, Highlights",
   photo: "images/Anette.png",
+  phone: "+1 (425) 318 0787"
 },
 {
   name: "Roxanne",

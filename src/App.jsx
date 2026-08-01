@@ -127,7 +127,6 @@ function Home() {
 function StylistsPage() {
   // filter out any stylist where services contain "owner"
   // Helpers (add near the top of StylistsPage)
-const isHolly = (s) => /holly/i.test(String(s.name || ""));
   const [open, setOpen] = useState(false);
 
   // lock scroll when modal is open
@@ -193,7 +192,7 @@ const isHolly = (s) => /holly/i.test(String(s.name || ""));
     <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
 {orderedStylists.map((s) => {
         const url = getBookingUrl(s);
-        const holly = isHolly(s);
+        const holly = Boolean(s.booking);
         const isNonVagaroContact =
           s.contact && !/vagaro\.com/i.test(String(s.contact || ""));
 
@@ -217,6 +216,14 @@ const isHolly = (s) => /holly/i.test(String(s.name || ""));
 
             <h3 className="mt-4 text-lg font-semibold">{s.name}</h3>
             <p className="text-neutral-600">{s.services}</p>
+            {s.phone && (
+  <a
+    href={`tel:${s.phone.replace(/[^\d+]/g, "")}`}
+    className="mt-3 inline-flex items-center rounded-full border border-rose-200 bg-rose-50 px-4 py-1.5 text-sm font-medium text-rose-700 transition-colors hover:border-rose-300 hover:bg-rose-100"
+  >
+    {s.phone}
+  </a>
+)}
 
             <div className="mt-5">
               {holly && url && (
